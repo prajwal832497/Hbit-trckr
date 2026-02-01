@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habit Tracker - Build Better Habits</title>
+    <meta name="description"
+        content="Track your good and bad habits, build streaks, and visualize your progress with beautiful analytics.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="glass-spheres.css">
+    <link rel="stylesheet" href="stats-display.css">
+    <link rel="stylesheet" href="emergency-fix.css">
+    <link rel="stylesheet" href="theme-panel.css">
+    <link rel="stylesheet" href="responsive.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Theme Control Panel -->
+    <div class="theme-control-panel" id="themePanel">
+        <button class="theme-toggle-btn" id="themePanelToggle" title="Change Theme">
+            🎨
+        </button>
+
+        <div class="theme-options" id="themeOptions">
+            <div class="theme-title">Color Theme</div>
+            <div class="theme-buttons">
+                <button class="theme-btn active" data-theme="purple" title="Purple">
+                    <span class="theme-preview" style="background: linear-gradient(135deg, #9333ea, #a855f7)"></span>
+                    Purple
+                </button>
+                <button class="theme-btn" data-theme="blue" title="Blue">
+                    <span class="theme-preview" style="background: linear-gradient(135deg, #3b82f6, #60a5fa)"></span>
+                    Blue
+                </button>
+                <button class="theme-btn" data-theme="rainbow" title="Rainbow">
+                    <span class="theme-preview"
+                        style="background: linear-gradient(135deg, #ef4444, #f97316, #eab308, #22c55e, #3b82f6, #9333ea)"></span>
+                    Rainbow
+                </button>
+                <button class="theme-btn" data-theme="white" title="White">
+                    <span class="theme-preview" style="background: linear-gradient(135deg, #ffffff, #d1d5db)"></span>
+                    White
+                </button>
+            </div>
+
+            <div class="theme-divider"></div>
+
+            <div class="theme-title">Effects</div>
+            <div class="theme-toggles">
+                <label class="theme-toggle">
+                    <input type="checkbox" id="toggleSounds" checked>
+                    <span>🔊 Sounds</span>
+                </label>
+                <label class="theme-toggle">
+                    <input type="checkbox" id="toggleParticles" checked>
+                    <span>✨ Particles</span>
+                </label>
+                <label class="theme-toggle">
+                    <input type="checkbox" id="toggleCollisions" checked>
+                    <span>💥 Collision</span>
+                </label>
+                <label class="theme-toggle">
+                    <input type="checkbox" id="toggleScroll" checked>
+                    <span>📜 Scroll FX</span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App Container -->
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1 class="app-title">✨ Habit Tracker</h1>
+                <div class="header-actions">
+                    <button class="btn-profile" id="btnProfile" aria-label="User profile">
+                        <span class="profile-avatar" id="profileAvatar">😊</span>
+                        <span class="profile-name" id="profileName">User</span>
+                    </button>
+                    <button class="btn-add-habit" id="btnAddHabit" aria-label="Add new habit">
+                        <span class="btn-icon">+</span>
+                        <span class="btn-text">Add Habit</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- User Greeting -->
+            <div class="user-greeting" id="userGreeting">
+                <h2 class="greeting-text" id="greetingText">Welcome!</h2>
+                <p class="greeting-message" id="greetingMessage">Let's build great habits today! 🔥</p>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="nav-tabs">
+                <button class="nav-tab active" data-view="dashboard" id="navDashboard">
+                    <span class="nav-icon">🏠</span>
+                    <span class="nav-label">Dashboard</span>
+                </button>
+                <button class="nav-tab" data-view="weekly" id="navWeekly">
+                    <span class="nav-icon">📅</span>
+                    <span class="nav-label">Weekly</span>
+                </button>
+                <button class="nav-tab" data-view="monthly" id="navMonthly">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-label">Monthly</span>
+                </button>
+                <button class="nav-tab" data-view="yearly" id="navYearly">
+                    <span class="nav-icon">📈</span>
+                    <span class="nav-label">Yearly</span>
+                </button>
+            </nav>
+        </header>
+
+        <!-- Horizontal Divider -->
+        <div class="section-divider"></div>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Dashboard View -->
+            <section class="view active" id="dashboardView">
+                <div class="dashboard-grid">
+                    <!-- Overall Stats Card -->
+                    <div class="stats-card glass-card">
+                        <h2 class="card-title">Today's Progress</h2>
+                        <div class="today-stats">
+                            <div class="stat-item">
+                                <div class="stat-value" id="todayCompleted">0</div>
+                                <div class="stat-label">Completed</div>
+                            </div>
+                            <div class="stat-divider"></div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="totalHabits">0</div>
+                                <div class="stat-label">Total Habits</div>
+                            </div>
+                            <div class="stat-divider"></div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="completionRate">0%</div>
+                                <div class="stat-label">Success Rate</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Habits List -->
+                    <div class="habits-section">
+                        <h2 class="section-title">Your Habits</h2>
+                        <div class="habits-list" id="habitsList">
+                            <!-- Habits will be dynamically inserted here -->
+                        </div>
+
+                        <div class="empty-state" id="emptyState">
+                            <div class="empty-icon">🎯</div>
+                            <h3>No habits yet</h3>
+                            <p>Start building better habits by adding your first one!</p>
+                            <button class="btn-primary" id="btnAddFirstHabit">
+                                <span>+ Add Your First Habit</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Weekly View -->
+            <section class="view" id="weeklyView">
+                <div class="view-header">
+                    <h2 class="view-title">Weekly Overview</h2>
+                    <div class="week-selector">
+                        <button class="btn-icon-only" id="btnPrevWeek" aria-label="Previous week">←</button>
+                        <span class="week-label" id="weekLabel">This Week</span>
+                        <button class="btn-icon-only" id="btnNextWeek" aria-label="Next week">→</button>
+                    </div>
+                </div>
+                <div class="weekly-content" id="weeklyContent">
+                    <!-- Weekly content will be dynamically inserted -->
+                </div>
+            </section>
+
+            <!-- Monthly View -->
+            <section class="view" id="monthlyView">
+                <div class="view-header">
+                    <h2 class="view-title">Monthly Statistics</h2>
+                    <div class="month-selector">
+                        <button class="btn-icon-only" id="btnPrevMonth" aria-label="Previous month">←</button>
+                        <span class="month-label" id="monthLabel">This Month</span>
+                        <button class="btn-icon-only" id="btnNextMonth" aria-label="Next month">→</button>
+                    </div>
+                </div>
+                <div class="monthly-content" id="monthlyContent">
+                    <!-- Monthly content will be dynamically inserted -->
+                </div>
+            </section>
+
+            <!-- Yearly View -->
+            <section class="view" id="yearlyView">
+                <div class="view-header">
+                    <h2 class="view-title">Yearly Trends</h2>
+                    <div class="year-selector">
+                        <button class="btn-icon-only" id="btnPrevYear" aria-label="Previous year">←</button>
+                        <span class="year-label" id="yearLabel">2026</span>
+                        <button class="btn-icon-only" id="btnNextYear" aria-label="Next year">→</button>
+                    </div>
+                </div>
+                <div class="yearly-content" id="yearlyContent">
+                    <!-- Yearly content will be dynamically inserted -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Add/Edit Habit Modal -->
+    <div class="modal-overlay" id="habitModal">
+        <div class="modal-content glass-card">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Add New Habit</h2>
+                <button class="btn-close" id="btnCloseModal" aria-label="Close modal">×</button>
+            </div>
+
+            <form class="habit-form" id="habitForm">
+                <div class="form-group">
+                    <label for="habitName" class="form-label">Habit Name</label>
+                    <input type="text" id="habitName" class="form-input" placeholder="e.g., Morning Meditation" required
+                        maxlength="50">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Category</label>
+                    <div class="category-toggle">
+                        <button type="button" class="category-btn active" data-type="good" id="btnGoodHabit">
+                            <span class="category-icon">👍</span>
+                            <span class="category-label">Good Habit</span>
+                        </button>
+                        <button type="button" class="category-btn" data-type="bad" id="btnBadHabit">
+                            <span class="category-icon">👎</span>
+                            <span class="category-label">Bad Habit</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Choose Icon</label>
+                    <div class="icon-grid" id="iconGrid">
+                        <button type="button" class="icon-option active" data-icon="🏃">🏃</button>
+                        <button type="button" class="icon-option" data-icon="📚">📚</button>
+                        <button type="button" class="icon-option" data-icon="🧘">🧘</button>
+                        <button type="button" class="icon-option" data-icon="💪">💪</button>
+                        <button type="button" class="icon-option" data-icon="🎯">🎯</button>
+                        <button type="button" class="icon-option" data-icon="💧">💧</button>
+                        <button type="button" class="icon-option" data-icon="☕">☕</button>
+                        <button type="button" class="icon-option" data-icon="🎨">🎨</button>
+                        <button type="button" class="icon-option" data-icon="💻">💻</button>
+                        <button type="button" class="icon-option" data-icon="🎵">🎵</button>
+                        <button type="button" class="icon-option" data-icon="🍎">🍎</button>
+                        <button type="button" class="icon-option" data-icon="😴">😴</button>
+                        <button type="button" class="icon-option" data-icon="🚭">🚭</button>
+                        <button type="button" class="icon-option" data-icon="🍔">🍔</button>
+                        <button type="button" class="icon-option" data-icon="🎮">🎮</button>
+                        <button type="button" class="icon-option" data-icon="📱">📱</button>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" id="btnCancelHabit">Cancel</button>
+                    <button type="submit" class="btn-primary" id="btnSaveHabit">
+                        <span id="saveButtonText">Create Habit</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal-content glass-card modal-small">
+            <div class="modal-header">
+                <h2 class="modal-title">Delete Habit?</h2>
+                <button class="btn-close" id="btnCloseDeleteModal" aria-label="Close modal">×</button>
+            </div>
+
+            <div class="modal-body">
+                <p>Are you sure you want to delete this habit? This action cannot be undone and all progress will be
+                    lost.</p>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" id="btnCancelDelete">Cancel</button>
+                <button type="button" class="btn-danger" id="btnConfirmDelete">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Welcome Modal (First Time User) -->
+    <div class="modal-overlay" id="welcomeModal">
+        <div class="modal-content glass-card">
+            <div class="welcome-header">
+                <div class="welcome-icon">🎉</div>
+                <h2 class="modal-title">Welcome to Habit Tracker!</h2>
+                <p class="welcome-subtitle">Let's set up your profile</p>
+            </div>
+
+            <form class="welcome-form" id="welcomeForm">
+                <div class="form-group">
+                    <label class="form-label">Your unique username</label>
+                    <div class="username-generator">
+                        <input type="text" id="usernameInput" class="form-input" placeholder="BravePhoenix42" required
+                            maxlength="30">
+                        <button type="button" class="btn-generate" id="btnGenerateUsername"
+                            title="Generate new username">
+                            🎲
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Choose your avatar</label>
+                    <div class="avatar-grid" id="avatarGrid">
+                        <button type="button" class="avatar-option active" data-avatar="😊">😊</button>
+                        <button type="button" class="avatar-option" data-avatar="🚀">🚀</button>
+                        <button type="button" class="avatar-option" data-avatar="⭐">⭐</button>
+                        <button type="button" class="avatar-option" data-avatar="🎯">🎯</button>
+                        <button type="button" class="avatar-option" data-avatar="💪">💪</button>
+                        <button type="button" class="avatar-option" data-avatar="🔥">🔥</button>
+                        <button type="button" class="avatar-option" data-avatar="✨">✨</button>
+                        <button type="button" class="avatar-option" data-avatar="🌟">🌟</button>
+                        <button type="button" class="avatar-option" data-avatar="🦁">🦁</button>
+                        <button type="button" class="avatar-option" data-avatar="🦅">🦅</button>
+                        <button type="button" class="avatar-option" data-avatar="🐺">🐺</button>
+                        <button type="button" class="avatar-option" data-avatar="🐉">🐉</button>
+                        <button type="button" class="avatar-option" data-avatar="⚡">⚡</button>
+                        <button type="button" class="avatar-option" data-avatar="🌈">🌈</button>
+                        <button type="button" class="avatar-option" data-avatar="🎨">🎨</button>
+                        <button type="button" class="avatar-option" data-avatar="🎵">🎵</button>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="submit" class="btn-primary btn-large">
+                        <span>Get Started! 🚀</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div class="modal-overlay" id="profileModal">
+        <div class="modal-content glass-card">
+            <div class="modal-header">
+                <h2 class="modal-title">Your Profile</h2>
+                <button class="btn-close" id="btnCloseProfile" aria-label="Close modal">×</button>
+            </div>
+
+            <div class="profile-view">
+                <div class="profile-avatar-large" id="profileAvatarLarge">😊</div>
+                <h3 class="profile-username" id="profileUsername">User</h3>
+
+                <div class="profile-stats-grid">
+                    <div class="profile-stat">
+                        <div class="stat-value" id="userTotalHabits">0</div>
+                        <div class="stat-label">Total Habits</div>
+                    </div>
+                    <div class="profile-stat">
+                        <div class="stat-value" id="userTotalCheckIns">0</div>
+                        <div class="stat-label">Check-ins</div>
+                    </div>
+                    <div class="profile-stat">
+                        <div class="stat-value" id="userLongestStreak">0 🔥</div>
+                        <div class="stat-label">Best Streak</div>
+                    </div>
+                    <div class="profile-stat">
+                        <div class="stat-value" id="userDaysSince">0</div>
+                        <div class="stat-label">Days Active</div>
+                    </div>
+                </div>
+
+                <div class="profile-section">
+                    <h4 class="section-title">Change Avatar</h4>
+                    <div class="avatar-grid" id="profileAvatarGrid">
+                        <!-- Same avatars as welcome modal -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="data.js"></script>
+    <script src="streak.js"></script>
+    <script src="charts.js"></script>
+    <script src="user.js"></script>
+    <script src="cursor-effects.js"></script>
+    <script src="glass-spheres.js"></script>
+    <script src="app.js"></script>
+
+    <!-- Theme Panel Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const panel = document.getElementById('themePanel');
+            const toggleBtn = document.getElementById('themePanelToggle');
+            const themeButtons = document.querySelectorAll('.theme-btn');
+
+            // Toggle panel
+            toggleBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                panel.classList.toggle('active');
+            });
+
+            // Close when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!panel.contains(e.target)) {
+                    panel.classList.remove('active');
+                }
+            });
+
+            // Theme change
+            themeButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const theme = btn.dataset.theme;
+
+                    // Update active state
+                    themeButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    // Change theme
+                    if (window.changeGlassTheme) {
+                        window.changeGlassTheme(theme);
+                    }
+                });
+            });
+
+            // Effect toggles
+            if (document.getElementById('toggleSounds')) {
+                document.getElementById('toggleSounds').addEventListener('change', (e) => {
+                    if (window.AdvancedGlassSpheres) {
+                        AdvancedGlassSpheres.config.enableSounds = e.target.checked;
+                    }
+                });
+            }
+
+            if (document.getElementById('toggleParticles')) {
+                document.getElementById('toggleParticles').addEventListener('change', (e) => {
+                    if (window.AdvancedGlassSpheres) {
+                        AdvancedGlassSpheres.config.enableParticles = e.target.checked;
+                        const particles = document.querySelectorAll('.glass-particle');
+                        particles.forEach(p => p.style.display = e.target.checked ? 'block' : 'none');
+                    }
+                });
+            }
+
+            if (document.getElementById('toggleCollisions')) {
+                document.getElementById('toggleCollisions').addEventListener('change', (e) => {
+                    if (window.AdvancedGlassSpheres) {
+                        AdvancedGlassSpheres.config.enableCollisions = e.target.checked;
+                    }
+                });
+            }
+
+            if (document.getElementById('toggleScroll')) {
+                document.getElementById('toggleScroll').addEventListener('change', (e) => {
+                    if (window.AdvancedGlassSpheres) {
+                        AdvancedGlassSpheres.config.enableScrollEffects = e.target.checked;
+                    }
+                });
+            }
+        });
+    </script>
+
+    <!-- Authentication & Profile Script -->
+    <script>
+        // Update profile button to link to profile page
+        document.getElementById('btnProfile').addEventListener('click', function () {
+            window.location.href = 'profile.html';
+        });
+
+        // Update profile display with user avatar
+        const user = UserProfile.getUser();
+        if (user && user.avatar) {
+            const profileAvatar = document.getElementById('profileAvatar');
+            profileAvatar.textContent = user.avatar;
+        }
+    </script>
+</body>
+
+</html>

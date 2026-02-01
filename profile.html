@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Habit Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="glass-spheres.css">
+    <link rel="stylesheet" href="stats-display.css">
+    <link rel="stylesheet" href="emergency-fix.css">
+    <link rel="stylesheet" href="theme-panel.css">
+    <link rel="stylesheet" href="responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        .profile-page {
+            min-height: 100vh;
+            padding: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .profile-header {
+            max-width: 1200px;
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .back-btn {
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(-4px);
+        }
+
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 2rem;
+        }
+
+        .profile-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .profile-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(20px);
+        }
+
+        .profile-avatar-section {
+            text-align: center;
+        }
+
+        .profile-avatar-large {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            font-size: 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 3px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .profile-avatar-large img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .profile-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-email {
+            color: #a0a0a0;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .profile-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(147, 51, 234, 0.2);
+            border: 1px solid rgba(147, 51, 234, 0.3);
+            border-radius: 20px;
+            color: #a855f7;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+        }
+
+        .stat-box-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-box-label {
+            font-size: 0.75rem;
+            color: #a0a0a0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .profile-main {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .edit-btn {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+        }
+
+        .edit-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .info-item label {
+            display: block;
+            font-size: 0.875rem;
+            color: #a0a0a0;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .info-item input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .info-item input:focus {
+            outline: none;
+            border-color: rgba(147, 51, 234, 0.5);
+        }
+
+        .avatar-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1rem;
+        }
+
+        .avatar-option {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .avatar-option:hover {
+            border-color: rgba(147, 51, 234, 0.5);
+            transform: scale(1.1);
+        }
+
+        .avatar-option.active {
+            border-color: rgba(147, 51, 234, 0.8);
+            background: rgba(147, 51, 234, 0.1);
+        }
+
+        .danger-zone {
+            border: 1px solid rgba(244, 67, 54, 0.3);
+            background: rgba(244, 67, 54, 0.05);
+        }
+
+        .logout-btn {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(244, 67, 54, 0.1);
+            border: 1px solid rgba(244, 67, 54, 0.3);
+            border-radius: 12px;
+            color: #ef5350;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .logout-btn:hover {
+            background: rgba(244, 67, 54, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .profile-container {
+                grid-template-columns: 1fr;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .avatar-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="profile-page">
+        <div class="profile-header">
+            <button class="back-btn" onclick="window.location.href='index.html'">
+                <span>←</span>
+                <span>Back to Habits</span>
+            </button>
+        </div>
+
+        <div class="profile-container">
+            <!-- Sidebar -->
+            <div class="profile-sidebar">
+                <!-- Avatar & Basic Info -->
+                <div class="profile-card profile-avatar-section">
+                    <div class="profile-avatar-large" id="profileAvatarLarge">
+                        😊
+                    </div>
+                    <h2 class="profile-name" id="profileName">User</h2>
+                    <p class="profile-email" id="profileEmail"></p>
+                    <span class="profile-badge" id="profileProvider">Guest</span>
+                </div>
+
+                <!-- Stats -->
+                <div class="profile-card">
+                    <h3 class="section-title" style="margin-bottom: 1rem;">Your Stats</h3>
+                    <div class="profile-stats">
+                        <div class="stat-box">
+                            <div class="stat-box-value" id="totalHabitsProfile">0</div>
+                            <div class="stat-box-label">Habits</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-box-value" id="totalCheckInsProfile">0</div>
+                            <div class="stat-box-label">Check-ins</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-box-value" id="longestStreakProfile">0 🔥</div>
+                            <div class="stat-box-label">Best Streak</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-box-value" id="daysSinceProfile">0</div>
+                            <div class="stat-box-label">DaysMember</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="profile-main">
+                <!-- Personal Information -->
+                <div class="profile-card">
+                    <div class="section-header">
+                        <h3 class="section-title">Personal Information</h3>
+                    </div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <label>Display Name</label>
+                            <input type="text" id="displayName" placeholder="Your name">
+                        </div>
+                        <div class="info-item">
+                            <label>Join Date</label>
+                            <input type="text" id="joinDate" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Avatar Selection -->
+                <div class="profile-card">
+                    <div class="section-header">
+                        <h3 class="section-title">Choose Avatar</h3>
+                    </div>
+                    <div class="avatar-grid" id="avatarGrid"></div>
+                </div>
+
+                <!-- Account Actions -->
+                <div class="profile-card danger-zone">
+                    <div class="section-header">
+                        <h3 class="section-title">Account Actions</h3>
+                    </div>
+                    <button class="logout-btn" id="logoutBtn">
+                        Sign Out
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="glass-spheres.js"></script>
+    <script src="data.js"></script>
+    <script src="streak.js"></script>
+    <script src="user.js"></script>
+
+    <script>
+        // Check authentication
+        const authData = JSON.parse(localStorage.getItem('habitTrackerAuth') || '{}');
+        if (!authData.provider) {
+            window.location.href = 'login.html';
+        }
+
+        // Load user profile
+        const user = UserProfile.getUser();
+        if (!user) {
+            // Create default user if not exists
+            UserProfile.createUser();
+        }
+
+        // Expanded avatar collection (50+ avatars matching login page)
+        const expandedAvatars = [
+            '😊', '😎', '🤩', '😏', '🥳', '😇', '🤠', '🥸', '😴', '🤯',
+            '🚀', '⭐', '💫', '✨', '🌟', '⚡', '🔥', '💎', '🎯', '🎨',
+            '🦁', '🦅', '🐺', '🐉', '🦄', '🦊', '🐯', '🐻', '🐼', '🐨',
+            '🌈', '🌸', '🌺', '🌻', '🌹', '🌷', '🍀', '🌿', '🌾', '🌴',
+            '🎵', '🎸', '🎮', '🎲', '🎪', '🎭', '🎬', '📚', '🏆', '👑'
+        ];
+
+        // Update profile display
+        function updateProfileDisplay() {
+            const user = UserProfile.getUser();
+
+            // Avatar - always use emoji
+            const avatarEl = document.getElementById('profileAvatarLarge');
+            avatarEl.textContent = user.avatar || '😊';
+
+            // Name
+            const name = user.username || 'User';
+            document.getElementById('profileName').textContent = name;
+            document.getElementById('displayName').value = user.username || name;
+
+            // Hide email field (not used in local system)
+            document.getElementById('profileEmail').style.display = 'none';
+
+            // Provider badge - show local account
+            const providerBadge = document.getElementById('profileProvider');
+            providerBadge.textContent = '✨ Local Account';
+            providerBadge.style.background = 'rgba(147, 51, 234, 0.2)';
+            providerBadge.style.borderColor = 'rgba(147, 51, 234, 0.3)';
+            providerBadge.style.color = '#a855f7';
+
+            // Stats
+            UserProfile.updateStats();
+            document.getElementById('totalHabitsProfile').textContent = user.totalHabits || 0;
+            document.getElementById('totalCheckInsProfile').textContent = user.totalCheckIns || 0;
+            document.getElementById('longestStreakProfile').textContent = (user.longestStreak || 0) + ' 🔥';
+            document.getElementById('daysSinceProfile').textContent = UserProfile.getDaysSinceJoined();
+
+            // Join date
+            const joinDate = new Date(user.joinDate);
+            document.getElementById('joinDate').value = joinDate.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        // Populate avatar grid with expanded collection
+        function populateAvatarGrid() {
+            const grid = document.getElementById('avatarGrid');
+            const user = UserProfile.getUser();
+
+            expandedAvatars.forEach(avatar => {
+                const btn = document.createElement('button');
+                btn.className = 'avatar-option';
+                if (avatar === user.avatar) {
+                    btn.classList.add('active');
+                }
+                btn.textContent = avatar;
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.avatar-option').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    UserProfile.updateUser({ avatar: avatar });
+                    updateProfileDisplay();
+                });
+                grid.appendChild(btn);
+            });
+        }
+
+        // Save display name
+        document.getElementById('displayName').addEventListener('blur', function () {
+            const newName = this.value.trim();
+            if (newName) {
+                UserProfile.updateUser({ username: newName });
+                updateProfileDisplay();
+            }
+        });
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', function () {
+            if (confirm('Are you sure you want to sign out?')) {
+                localStorage.removeItem('habitTrackerAuth');
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Initialize
+        updateProfileDisplay();
+        populateAvatarGrid();
+    </script>
+</body>
+
+</html>

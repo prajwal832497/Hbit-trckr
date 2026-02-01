@@ -1,0 +1,51 @@
+/* EMERGENCY FIX - Force stat values to show */
+.stat-value {
+    font-size: 3rem !important;
+    font-weight: 700 !important;
+    color: #ffffff !important;
+    background: transparent !important;
+    margin-bottom: 0.5rem !important;
+    line-height: 1 !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    min-height: 50px !important;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3) !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+
+.stat-label {
+    font-size: 0.875rem !important;
+    color: #a0a0a0 !important;
+    background: transparent !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    font-weight: 300 !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    -webkit-text-fill-color: #a0a0a0 !important;
+}
+
+/* Force the stats card to show */
+.stats-card {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+}
+
+.today-stats {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.stat-item {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    flex: 1 !important;
+    text-align: center !important;
+    background: transparent !important;
+}

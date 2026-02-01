@@ -1,0 +1,205 @@
+/* Additional Minimal Abstract Styles */
+
+/* Section Numbers - .01, .02, .03 style */
+.section-card {
+    position: relative;
+    margin-bottom: var(--spacing-4xl);
+    padding: var(--spacing-3xl) var(--spacing-xl);
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-base);
+}
+
+.section-card::before {
+    position: absolute;
+    top: var(--spacing-lg);
+    right: var(--spacing-lg);
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+    font-weight: 300;
+    letter-spacing: 0.1em;
+}
+
+.section-card:hover {
+    border-color: var(--border-hover);
+    box-shadow: 0 0 40px var(--accent-glow);
+}
+
+/* Navigation Dots - Minimal Side Navigation */
+.nav-dots {
+    position: fixed;
+    left: var(--spacing-xl);
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.nav-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-full);
+    background: var(--border-subtle);
+    transition: all var(--transition-base);
+    cursor: pointer;
+}
+
+.nav-dot:hover,
+.nav-dot.active {
+    background: var(--text-primary);
+    transform: scale(1.5);
+}
+
+/* Minimal Typography */
+.text-huge {
+    font-size: var(--font-size-hero);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+}
+
+.text-section-title {
+    font-size: var(--font-size-2xl);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--spacing-xl);
+}
+
+.text-minimal {
+    font-size: var(--font-size-sm);
+    font-weight: 300;
+    letter-spacing: 0.03em;
+    color: var(--text-secondary);
+}
+
+/* Minimal Stat Display */
+.minimal-stat {
+    margin-bottom: var(--spacing-lg);
+}
+
+.minimal-stat-value {
+    font-size: var(--font-size-3xl);
+    font-weight: 300;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.minimal-stat-label {
+    font-size: var(--font-size-xs);
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+}
+
+/* Abstract Progress Ring */
+.progress-ring {
+    width: 120px;
+    height: 120px;
+    position: relative;
+    margin: 0 auto;
+}
+
+.progress-ring-circle {
+    fill: none;
+    stroke: var(--border-subtle);
+    stroke-width: 2;
+}
+
+.progress-ring-progress {
+    fill: none;
+    stroke: var(--text-primary);
+    stroke-width: 2;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.5s ease;
+}
+
+/* Minimal Button Styles */
+.btn-minimal {
+    padding: var(--spacing-md) var(--spacing-xl);
+    background: transparent;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: var(--font-size-sm);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.btn-minimal:hover {
+    border-color: var(--border-hover);
+    background: var(--bg-secondary);
+    transform: translateY(-2px);
+}
+
+/* Abstract Heatmap - Minimal Dots */
+.heatmap-minimal {
+    display: grid;
+    grid-template-columns: repeat(53, 1fr);
+    gap: 3px;
+    margin: var(--spacing-xl) 0;
+}
+
+.heatmap-dot {
+    width: 100%;
+    aspect-ratio: 1;
+    background: var(--border-subtle);
+    border-radius: 2px;
+    transition: all var(--transition-fast);
+}
+
+.heatmap-dot.active {
+    background: var(--text-primary);
+}
+
+.heatmap-dot.active-low {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.heatmap-dot.active-medium {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.heatmap-dot.active-high {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+/* Minimal Habit Item */
+.habit-item-minimal {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-lg) 0;
+    border-bottom: 1px solid var(--border-subtle);
+    transition: all var(--transition-base);
+}
+
+.habit-item-minimal:hover {
+    padding-left: var(--spacing-md);
+    border-color: var(--border-hover);
+}
+
+.habit-item-minimal:last-child {
+    border-bottom: none;
+}
+
+.habit-name-minimal {
+    font-size: var(--font-size-base);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.habit-streak-minimal {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    font-weight: 300;
+}
